@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">boombike</string>
+    <string name="title_activity_main">boombike</string>
+    <string name="low_storage_error">기기 저장공간이 부족합니다.</string>
+</resources>

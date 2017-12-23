@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1007467317374",
+    "firebase_url": "https://buoyant-aloe-189201.firebaseio.com",
+    "project_id": "buoyant-aloe-189201",
+    "storage_bucket": "buoyant-aloe-189201.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007467317374:android:a79d25b83b4d8f49",
+        "android_client_info": {
+          "package_name": "com.boombike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007467317374-sre74ns5r2ek31fmj5mn467ddrf6e2a3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boombike",
+            "certificate_hash": "121ade56a1a3ce0de0020e23509718bf40d0f256"
+          }
+        },
+        {
+          "client_id": "1007467317374-1mshc4nj0n090f75ipa10uqg300i1v89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOixT6gMaAW9JG6xYpbaczKbSxA6MpURc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007467317374-1mshc4nj0n090f75ipa10uqg300i1v89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
