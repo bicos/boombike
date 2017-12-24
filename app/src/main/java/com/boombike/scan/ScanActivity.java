@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -32,6 +31,10 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 
@@ -52,11 +55,13 @@ public class ScanActivity extends AppCompatActivity implements BarcodeGraphicTra
 
     private boolean useFlash = false;
 
+    private FirebaseDatabase database;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -65,6 +70,8 @@ public class ScanActivity extends AppCompatActivity implements BarcodeGraphicTra
 
         preview = findViewById(R.id.preview);
         graphicOverlay = findViewById(R.id.overlay);
+
+        database = FirebaseDatabase.getInstance();
 
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -193,17 +200,34 @@ public class ScanActivity extends AppCompatActivity implements BarcodeGraphicTra
         }
     }
 
+    boolean isBarcodeProcess = false;
+
     @Override
     public void onBarcodeDetected(Barcode barcode) {
-        runOnUiThread(() -> {
-            new AlertDialog.Builder(this)
-                    .setMessage(barcode.displayValue)
-                    .setPositiveButton("확인", (dialog, which) -> {
-                        Uri uri = Uri.parse(barcode.displayValue);
-                        UnLockActivity.start(ScanActivity.this, uri.getQueryParameter("u"), "FF:FF:11:00:03:1F");
+        if (isBarcodeProcess) {
+            return;
+        }
+
+        isBarcodeProcess = true;
+        Uri uri = Uri.parse(barcode.displayValue);
+        String id = uri.getQueryParameter("u");
+
+        database.getReference().child("bikedata").child(id)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            UnLockActivity.start(ScanActivity.this, Integer.parseInt(id), (String) dataSnapshot.getValue());
+                        } else {
+                            Toast.makeText(ScanActivity.this, "자전거 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        }
                         finish();
-                    })
-                    .show();
-        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(ScanActivity.this, "자전거 정보 가져오기를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
