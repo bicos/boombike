@@ -5,16 +5,4 @@
     android:keepScreenOn="true"
     android:background="@android:color/darker_gray">
 
-    <com.boombike.camera.CameraSourcePreview
-        android:id="@+id/preview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.boombike.camera.GraphicOverlay
-            android:id="@+id/overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.boombike.camera.CameraSourcePreview>
-
 </FrameLayout>

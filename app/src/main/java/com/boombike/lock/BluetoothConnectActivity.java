@@ -41,6 +41,7 @@ abstract public class BluetoothConnectActivity extends AppCompatActivity {
     protected static final int BLT_CONNECT = 0;
     protected static final int BLT_DISCONNECT = 1;
     protected static final int BLT_ERROR = 2;
+
     protected static final int ACTION_LOCK = 3;
 
     protected static final byte COMMAND_GET_KEY = 0x11;
